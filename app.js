@@ -56,6 +56,17 @@ const server = createServer(async (req, res) => {
             const links = await loadLinks()
             res.writeHead(200, { "Content-Type": "application/json" })
             return res.end(JSON.stringify(links))
+        } else {
+            const links = await loadLinks()
+            const shortCode = req.url.slice(1)
+            console.log("links red",req.url);
+            if(links[shortCode]) {
+                res.writeHead(302, {location: links[shortCode]})
+                return res.end()
+            }
+
+            res.writeHead(404, { "Content-Type": "text/plain" })
+            return res.end("Shortened URL is not found")
         }
 
     }
@@ -73,12 +84,10 @@ const server = createServer(async (req, res) => {
                 return res.end("URL is required")
             }
 
-            console.log(shortCode);
-            console.log(links);
 
 
             const finalShortCode = shortCode || crypto.randomBytes(4).toString('hex')
-            console.log(finalShortCode);
+           
 
             if (links[finalShortCode]) {
                 res.writeHead(400, { "Content-Type": "text/plain" })

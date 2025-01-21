@@ -42,13 +42,13 @@
                 const response = await fetch('/links')
                 const links = await response.json()
                 console.log("response ==>>", links);
-
                 const list = document.getElementById('Shortened-urls')
                 list.innerHTML = ''
-
+                
                 for(const [shortCode, url] of Object.entries(links)) {
                     const li = document.createElement('li')
-                    li.innerHTML = `<a target="_blank" href="/${shortCode}">${window.location.origin}/${shortCode}</a> - ${url}`
+                    const truncatedUrl = url.length >= 30 ? `${url.slice(0, 30)}...` : url
+                    li.innerHTML = `<a target="_blank" href="/${shortCode}">${window.location.origin}/${shortCode}</a> - ${truncatedUrl}`
                     list.appendChild(li)
                 }
 
