@@ -33,8 +33,31 @@
         </ul>
     </div>
 
-
+    
     <script>
+        const getData = async () => {
+            console.log('adfsd');
+
+            try {
+                const response = await fetch('/links')
+                const links = await response.json()
+                console.log("response ==>>", links);
+
+                const list = document.getElementById('Shortened-urls')
+                list.innerHTML = ''
+
+                for(const [shortCode, url] of Object.entries(links)) {
+                    const li = document.createElement('li')
+                    li.innerHTML = `<a target="_blank" href="/${shortCode}">${window.location.origin}/${shortCode}</a> - ${url}`
+                    list.appendChild(li)
+                }
+
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+        getData()
 
         document.getElementById('shorten-form').addEventListener('submit', async (event) => {
             event.preventDefault()
@@ -45,12 +68,13 @@
 
             try {
                 const response = await fetch('/shorten', {
-                    method :'POST',
-                    headers: {"Content-Type": "application/json"},
-                    body:  JSON.stringify({url, shortCode})
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url, shortCode })
                 })
 
-                if(response.ok) {
+                if (response.ok) {
+                    getData()
                     alert('successfully')
                     event.target.reset()
                 } else {
@@ -59,7 +83,7 @@
                 }
             } catch (error) {
                 console.log(error);
-                
+
             }
         })
 

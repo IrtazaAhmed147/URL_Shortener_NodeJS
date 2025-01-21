@@ -52,6 +52,10 @@ const server = createServer(async (req, res) => {
 
             return serveFile(res, path.join("public", "style.css"), 'text/css')
 
+        } else if(req.url === '/links') {
+            const links = await loadLinks()
+            res.writeHead(200, { "Content-Type": "application/json" })
+            return res.end(JSON.stringify(links))
         }
 
     }
@@ -71,11 +75,11 @@ const server = createServer(async (req, res) => {
 
             console.log(shortCode);
             console.log(links);
-            
-            
+
+
             const finalShortCode = shortCode || crypto.randomBytes(4).toString('hex')
             console.log(finalShortCode);
-            
+
             if (links[finalShortCode]) {
                 res.writeHead(400, { "Content-Type": "text/plain" })
                 return res.end("Short code is already exist. Please choose another.")
