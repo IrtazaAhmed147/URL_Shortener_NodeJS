@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <h1>Url Shortener</h1>
-        <form id="shorten-form">
+        <form action="/" method="post">
             <div>
                 <label for="url">Enter URL:</label>
                 <input type="url" name="url" id="url" required>
@@ -28,13 +28,24 @@
         </form>
 
         <h2>Shortened URLs</h2>
-        <ul id="Shortened-urls">
+        <ul>
 
+            <!-- Object.entries(links).map(([shortCode, url]) => `<li><a target="_blank" href="/${shortCode}">${hosts}/${shortCode}</a> - ${url}<li>`).join(" ") -->
+
+            <% Object.entries(links).map(([shortCode, url])=> { %>
+
+                <%  const truncatedUrl = url.length > 30 ? `${url.slice(0, 30)}...` : url %>
+                <li>
+                    <a href="/<%= shortCode%>" target="_blank">
+                        <%= hosts %>/<%= shortCode %>
+                    </a> - <%= truncatedUrl %>
+                </li>
+                <% }) %>
         </ul>
     </div>
 
-    
-    <script>
+
+    <!-- <script>
         const getData = async () => {
             console.log('adfsd');
 
@@ -87,7 +98,7 @@
             }
         })
 
-    </script>
+    </script> -->
 </body>
 
 </html>

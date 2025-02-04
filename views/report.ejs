@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- if header is not in views folder then specify path in ()  -->
+     <!-- it is like component and we are using it -->
+
+    <%- include("header") %>
+    <!-- this is comment -->
+    <h1>Student report card</h1>
+
+
+    <%# this is comment %>
+
+        <!-- <%=  %>  these sign is use for javascript -->
+        <p>
+            <%# name %>
+                <% students.forEach((student)=> { %>
+                    <li>Student Name:  <%= student.name %> </li>
+                    <li>Student Grade: <%= student.grade %> </li>
+                    <li>Student favouriteSubjects   : <%= student.favouriteSubjects %> </li>
+                    <% }) %>
+        </p>
+
+</body>
+
+</html>
